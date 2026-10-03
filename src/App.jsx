@@ -41,6 +41,7 @@ const projects = [
   { title: 'Wakati', type: 'Web platform + React Native', icon: <DashboardRoundedIcon />, tags: ['React.js', 'React Native', 'Role-based workflows'], desc: 'Merchant, events, and refund management platform with distinct user roles, reporting, exports, QR generation, and customer/business mobile apps.' },
   { title: 'Bank of Baroda (BOB)', type: 'Web application', icon: <AccountTreeRoundedIcon />, tags: ['Admin', 'Adjudicator', 'Approvals'], desc: 'Role-based web application with Admin and Adjudicator access, approval workflows, reporting, and data export.' },
   { title: 'DVLA', type: 'React Native · Police & customer apps', icon: <SmartphoneRoundedIcon />, tags: ['React Native', 'QR scanning', 'Mobile'], desc: 'Mobile applications for police users and customers supporting driver and vehicle management workflows and QR-code scanning.' },
+  { title: 'ADAFSA', type: 'Food survey & nutrition application', icon: <DashboardRoundedIcon />, tags: ['User roles', 'Household surveys', 'Nutrition reports'], desc: 'Food and nutrition application supporting user creation, survey setup, household food-consumption data collection, nutrition calculations, and detailed reporting. Surveyors visit households, record what people eat and provide food-related feedback to support healthier choices.' },
   { title: 'Bank of Abyssinia', type: 'Customer enrollment system', icon: <AccountTreeRoundedIcon />, tags: ['Enrollment', 'Records', 'Approval'], desc: 'Customer enrollment and bank-account creation workflows, customer record management, data export, and Adjudicator review/approval.' },
   { title: 'CNAM Dashboard', type: 'Role-based dashboard', icon: <DashboardRoundedIcon />, tags: ['Admin', 'Adjudicator', 'Reports'], desc: 'Dashboard with Admin and Adjudicator logins and workflows similar to the BOB application.' },
   { title: 'SkillPundit', type: 'Online learning platform', icon: <CodeRoundedIcon />, tags: ['React.js', 'PHP', 'Learning'], desc: 'Learning modules and online tests for programming languages, built with React.js and PHP.' },
@@ -84,6 +85,7 @@ function App() {
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mt: 3 }}>
                   <Button variant="contained" endIcon={<ArrowOutwardRoundedIcon />} onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}>Explore my work</Button>
                   <Button variant="outlined" startIcon={<MailOutlineRoundedIcon />} href="mailto:ravi1993272@gmail.com">Contact me</Button>
+                  <Button variant="text" startIcon={<DownloadRoundedIcon />} component="a" href="/resume.pdf" download="Ravichandra_Bodduri_Resume.pdf">Download resume</Button>
                 </Stack>
                 <Stack direction="row" spacing={1.2} sx={{ mt: 3 }}>
                   <Tooltip title="GitHub"><IconButton className="social-btn" component="a" href="https://github.com/ravi1927" target="_blank" rel="noreferrer"><GitHubIcon /></IconButton></Tooltip>
@@ -122,7 +124,7 @@ function App() {
           </MotionBox>)}</Box>
         </Box>
         <Box component="section" id="projects" sx={{ pt: 11 }}>
-          <SectionTitle eyebrow="SELECTED WORK" title="Projects that solve real problems" subtitle="A selection of web and mobile products spanning merchant operations, customer onboarding, vehicle workflows, and learning."/>
+          <SectionTitle eyebrow="SELECTED WORK" title="Projects that solve real problems" subtitle="A selection of web and mobile products spanning merchant operations, food and nutrition surveys, customer onboarding, vehicle workflows, and learning."/>
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>{categories.map(c=><Button key={c} size="small" onClick={()=>setFilter(c)} className={`filter-btn ${filter===c?'active':''}`}>{c}</Button>)}</Stack>
           <Grid container spacing={2}>{visibleProjects.map((p,i)=><Grid item xs={12} sm={6} md={4} key={p.title}><MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .4, delay: (i%3)*.06 }} whileHover={{ y: -5 }} sx={{ height: '100%' }}>
             <Card className="project-card"><CardContent><Box className="project-icon">{p.icon}</Box><Typography className="project-type">{p.type}</Typography><Typography variant="h5" className="project-title">{p.title}</Typography><Typography color="text.secondary" className="project-desc">{p.desc}</Typography><Stack direction="row" spacing={.7} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>{p.tags.map(t=><Chip key={t} label={t} size="small" className="project-tag"/>)}</Stack></CardContent></Card>
