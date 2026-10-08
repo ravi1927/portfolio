@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   AppBar, Toolbar, Box, Container, Typography, Button, IconButton, Stack, Chip,
   Card, CardContent, Grid, Divider, Drawer, List, ListItemButton, ListItemText,
-  Tooltip
+  Tooltip, TextField, FormControl, InputLabel, Select, MenuItem, Alert
 } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded';
@@ -15,15 +15,22 @@ import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import DesignServicesRoundedIcon from '@mui/icons-material/DesignServicesRounded';
+import PsychologyRoundedIcon from '@mui/icons-material/PsychologyRounded';
+import TerminalRoundedIcon from '@mui/icons-material/TerminalRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
-const nav = ['About', 'Skills', 'Experience', 'Projects', 'Contact'];
+const nav = ['About', 'Skills', 'AI Lab', 'Experience', 'Projects', 'Personal Apps', 'Contact'];
 const skills = [
   { name: 'React.js', group: 'Frontend' }, { name: 'React Native', group: 'Mobile' }, { name: 'JavaScript ES6+', group: 'Frontend' },
   { name: 'HTML5 & CSS3', group: 'Frontend' }, { name: 'Bootstrap', group: 'Frontend' }, { name: 'AngularJS', group: 'Frontend' },
   { name: 'PHP', group: 'Backend' }, { name: 'CodeIgniter', group: 'Backend' }, { name: 'MySQL', group: 'Database' },
-  { name: 'REST API integration', group: 'Development' }, { name: 'Git & GitHub', group: 'Tools' }, { name: 'Responsive UI', group: 'Development' }
+  { name: 'REST API development', group: 'Backend' }, { name: 'Java REST API (Learning)', group: 'Backend' }, { name: 'Git & GitHub', group: 'Tools' }, { name: 'Figma', group: 'Design' }, { name: 'AI-assisted development', group: 'AI' }, { name: 'ChatGPT', group: 'AI' }, { name: 'Claude', group: 'AI' }, { name: 'Cursor', group: 'AI' }, { name: 'Responsive UI', group: 'Development' }
 ];
 const experience = [
   { company: 'Aptiway Technologies', role: 'Software Developer', period: 'Feb 2022 — Present', projects: [
@@ -42,19 +49,286 @@ const projects = [
   { title: 'Bank of Baroda (BOB)', type: 'Web application', icon: <AccountTreeRoundedIcon />, tags: ['Admin', 'Adjudicator', 'Approvals'], desc: 'Role-based web application with Admin and Adjudicator access, approval workflows, reporting, and data export.' },
   { title: 'DVLA', type: 'React Native · Police & customer apps', icon: <SmartphoneRoundedIcon />, tags: ['React Native', 'QR scanning', 'Mobile'], desc: 'Mobile applications for police users and customers supporting driver and vehicle management workflows and QR-code scanning.' },
   { title: 'ADAFSA', type: 'Food survey & nutrition application', icon: <DashboardRoundedIcon />, tags: ['User roles', 'Household surveys', 'Nutrition reports'], desc: 'Food and nutrition application supporting user creation, survey setup, household food-consumption data collection, nutrition calculations, and detailed reporting. Surveyors visit households, record what people eat and provide food-related feedback to support healthier choices.' },
+  { title: 'Milk Delivery', type: 'React Native + Admin web app', icon: <SmartphoneRoundedIcon />, tags: ['React Native', 'Delivery', 'Admin reports'], desc: 'Milk delivery management application with Admin and Delivery Boy roles, area-wise customer assignments, daily delivery status tracking, and reporting. Customer deliveries move from Pending to Delivered as the delivery is completed.' },
   { title: 'Bank of Abyssinia', type: 'Customer enrollment system', icon: <AccountTreeRoundedIcon />, tags: ['Enrollment', 'Records', 'Approval'], desc: 'Customer enrollment and bank-account creation workflows, customer record management, data export, and Adjudicator review/approval.' },
   { title: 'CNAM Dashboard', type: 'Role-based dashboard', icon: <DashboardRoundedIcon />, tags: ['Admin', 'Adjudicator', 'Reports'], desc: 'Dashboard with Admin and Adjudicator logins and workflows similar to the BOB application.' },
   { title: 'SkillPundit', type: 'Online learning platform', icon: <CodeRoundedIcon />, tags: ['React.js', 'PHP', 'Learning'], desc: 'Learning modules and online tests for programming languages, built with React.js and PHP.' },
   { title: 'ProxyRam', type: 'Company compliance system', icon: <DashboardRoundedIcon />, tags: ['CodeIgniter', 'MySQL', 'Dashboard'], desc: 'Dashboard and notification functionality for a company compliance system.' }
 ];
+
+
+const personalApps = [
+  { title: 'Udhar', type: 'Personal React Native App', icon: <SmartphoneRoundedIcon />, tags: ['React Native', 'Mobile', 'Ledger'], desc: 'Personal project for digital udhar/credit management, customer records, transaction tracking, and a simple mobile-first workflow.', url: 'https://github.com/ravi1927/Udhar.git' },
+  { title: 'Milk Delivery Management', type: 'Personal React Native App', icon: <SmartphoneRoundedIcon />, tags: ['React Native', 'Admin', 'Delivery'], desc: 'Personal project for managing delivery boys, assigned customers, daily milk delivery status, pending-to-delivered workflows, and reports.', url: 'https://github.com/your-github-username/milk-delivery-management' },
+  { title: 'Finance Management', type: 'Personal React Native App', icon: <AccountTreeRoundedIcon />, tags: ['React Native', 'Finance', 'Reports'], desc: 'Personal finance management application for tracking transactions, financial information, dashboards, and reporting workflows.', url: 'https://github.com/ravi1927/finance-application.git' },
+  { title: 'Kaju Bussiness Management', type: 'Personal React Native App', icon: <AccountTreeRoundedIcon />, tags: ['React Native', 'Finance', 'Reports'], desc: 'Business management application for tracking weekly stock purchases and sales, monitoring available inventory, managing customers and their orders, tracking order status, and managing dispatch and delivery workflows with business reports and dashboards.', url: 'https://github.com/ravi1927/kaju-bussiness.git' }
+];
+
+const aiTools = [
+  {
+    name: 'Figma',
+    role: 'UX & system design',
+    icon: <DesignServicesRoundedIcon />,
+    desc: 'Design responsive screens, reusable components, user flows, states and developer-ready UI specifications.',
+    url: 'https://www.figma.com/'
+  },
+  {
+    name: 'ChatGPT',
+    role: 'Architecture & problem solving',
+    icon: <PsychologyRoundedIcon />,
+    desc: 'Turn requirements into product flows, frontend architecture, backend/API plans, SQL designs, debugging steps and test plans.',
+    url: 'https://chatgpt.com/'
+  },
+  {
+    name: 'Claude',
+    role: 'Code review & reasoning',
+    icon: <PsychologyRoundedIcon />,
+    desc: 'Use a second AI perspective for architecture reviews, large code changes, API reviews, documentation and difficult debugging.',
+    url: 'https://claude.ai/'
+  },
+  {
+    name: 'Cursor',
+    role: 'Full-stack implementation',
+    icon: <TerminalRoundedIcon />,
+    desc: 'Implement frontend, backend and database tasks in small reviewable steps while keeping the existing project architecture intact.',
+    url: 'https://www.cursor.com/'
+  }
+];
+
+const starterPrompts = [
+  'Build a responsive React website for a milk delivery business with customer, delivery partner and admin roles.',
+  'Build a React Native food survey app with surveyor, admin and report workflows.',
+  'Build a modern portfolio website for a senior frontend developer with projects, experience and downloadable resume.'
+];
+
+function buildAiPrompt({ idea, platform, audience, features, frontend, design, backend, database }) {
+  return `You are my senior full-stack product architect, UX designer, backend/API engineer and ${platform} developer.
+
+PROJECT IDEA
+${idea || 'Create a production-ready application from the requirements below.'}
+
+TARGET USERS
+${audience || 'Define the main user personas and their goals.'}
+
+PLATFORM
+${platform}
+
+CORE FEATURES
+${features || 'Ask me for missing requirements, then propose the essential MVP features.'}
+
+FRONTEND STACK
+${frontend || 'Recommend a practical JavaScript frontend stack.'}
+
+BACKEND / REST API STACK
+${backend || 'Recommend a practical REST API architecture.'}
+
+DATABASE / SQL
+${database || 'Recommend a relational data model and SQL structure.'}
+
+DESIGN DIRECTION
+${design || 'Modern, clean, responsive UI with accessible typography, clear hierarchy and reusable components.'}
+
+FULL-STACK WORKING METHOD
+1. Convert the idea into a concise product requirements document.
+2. Identify user roles, permissions, screens, navigation, user journeys and edge cases.
+3. Create a screen-by-screen Figma specification: layout, components, spacing, states and responsive behavior.
+4. Design the database: tables, columns, primary keys, foreign keys, relationships, indexes and important SQL queries.
+5. Design the REST API: authentication, authorization, endpoints, HTTP methods, request/response JSON, validation, errors and pagination/filtering.
+6. Provide a PHP REST API implementation plan when PHP is selected.
+7. When useful for learning, provide the equivalent Java REST API design/implementation and explain how it maps to the PHP version.
+8. Propose the frontend architecture and folder structure for React.js or React Native.
+9. Define how frontend screens consume the APIs, including loading, empty, validation, error and success states.
+10. Break implementation into small milestones: database → API → frontend → integration → testing → deployment.
+11. Generate production-quality JavaScript code unless I explicitly ask for another language. Backend code may use PHP or Java according to the selected stack.
+12. After each major feature, provide a short test checklist and explain exactly what I should verify.
+
+IMPORTANT
+- Do not invent business rules that I have not provided. Clearly label assumptions.
+- Prefer simple maintainable solutions over unnecessary complexity.
+- Keep secrets/API keys out of frontend source code.
+- Never put database credentials directly in frontend code.
+- Validate and authorize API requests on the server.
+- Use prepared statements / safe database access patterns.
+- When I give you a Figma design, use it as the visual source of truth.
+- When I paste an existing file, modify only what is necessary and preserve working behavior.
+- For Cursor, give changes as small, reviewable tasks rather than rewriting the whole project.
+- If I am learning Java, explain the Java API equivalent in terms of concepts I already know from PHP REST APIs.
+
+Start by producing:
+A) Product requirements
+B) User roles and permissions
+C) User flows and screen list
+D) Figma design plan
+E) MySQL/database design
+F) REST API specification
+G) PHP implementation approach
+H) Java REST API equivalent for learning
+I) React/React Native architecture
+J) First implementation milestone and test checklist`;
+}
+
 const fade = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: .55 } } };
 
 function SectionTitle({ eyebrow, title, subtitle }) {
   return <Box sx={{ mb: 4 }}><Typography className="eyebrow">{eyebrow}</Typography><Typography variant="h2" className="section-title">{title}</Typography>{subtitle && <Typography color="text.secondary" sx={{ mt: 1, maxWidth: 680 }}>{subtitle}</Typography>}</Box>;
 }
+
+function AiBuildLab() {
+  const [idea, setIdea] = useState(starterPrompts[0]);
+  const [platform, setPlatform] = useState('React.js web application');
+  const [audience, setAudience] = useState('Customers, administrators and internal staff');
+  const [features, setFeatures] = useState('Authentication, dashboard, role-based access, search/filtering, forms, reports and responsive UI');
+  const [frontend, setFrontend] = useState('React.js / React Native with JavaScript and Material UI where appropriate');
+  const [backend, setBackend] = useState('REST APIs with PHP; also show the equivalent Java REST API approach for learning');
+  const [database, setDatabase] = useState('MySQL with normalized tables, relationships, indexes and practical SQL queries');
+  const [design, setDesign] = useState('Navy professional UI, subtle animations, clean cards, strong typography and mobile-first responsive layouts');
+  const [generated, setGenerated] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const generate = () => {
+    setGenerated(buildAiPrompt({ idea, platform, audience, features, frontend, design, backend, database }));
+    setCopied(false);
+  };
+
+  const copyPrompt = async () => {
+    if (!generated) return;
+    try {
+      await navigator.clipboard.writeText(generated);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return <Box component="section" id="ai lab" sx={{ pt: 11 }}>
+    <SectionTitle
+      eyebrow="AI-ASSISTED DEVELOPMENT"
+      title="Build complete websites & apps with AI"
+      subtitle="A full-stack workflow for turning an idea into Figma designs, MySQL data models, REST APIs, React/React Native apps, testing and production — with AI helping at every stage."
+    />
+
+    <Grid container spacing={2} sx={{ mb: 4 }}>
+      {aiTools.map((tool, i) => <Grid item xs={12} sm={6} md={3} key={tool.name}>
+        <MotionBox whileHover={{ y: -5 }} transition={{ duration: .2 }} sx={{ height: '100%' }}>
+          <Card className="ai-tool-card">
+            <CardContent>
+              <Box className="ai-tool-icon">{tool.icon}</Box>
+              <Typography className="project-type">{tool.role}</Typography>
+              <Typography variant="h6" className="ai-tool-title">{tool.name}</Typography>
+              <Typography color="text.secondary" className="ai-tool-desc">{tool.desc}</Typography>
+              <Button
+                size="small"
+                endIcon={<LaunchRoundedIcon />}
+                href={tool.url}
+                target="_blank"
+                rel="noreferrer"
+                sx={{ mt: 1.5 }}
+              >
+                Open tool
+              </Button>
+            </CardContent>
+          </Card>
+        </MotionBox>
+      </Grid>)}
+    </Grid>
+
+    <Card className="ai-builder-card">
+      <CardContent>
+        <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" spacing={2} sx={{ mb: 3 }}>
+          <Box>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <AutoAwesomeRoundedIcon className="ai-spark" />
+              <Typography variant="h5" className="ai-builder-title">AI Project Builder</Typography>
+            </Stack>
+            <Typography color="text.secondary" sx={{ mt: .7 }}>
+              Fill in the idea once. Generate a master prompt you can paste into ChatGPT, Claude or Cursor.
+            </Typography>
+          </Box>
+          <Chip label="Full-stack • JavaScript • PHP • MySQL • Java" className="ai-badge" />
+        </Stack>
+
+        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+          {starterPrompts.map(prompt => <Button
+            key={prompt}
+            size="small"
+            className="starter-btn"
+            onClick={() => setIdea(prompt)}
+          >
+            Use example
+          </Button>)}
+        </Stack>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <TextField label="What do you want to build?" value={idea} onChange={e => setIdea(e.target.value)} fullWidth multiline minRows={3} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth>
+              <InputLabel>Platform</InputLabel>
+              <Select value={platform} label="Platform" onChange={e => setPlatform(e.target.value)}>
+                <MenuItem value="React.js web application">React.js web application</MenuItem>
+                <MenuItem value="React Native mobile application">React Native mobile application</MenuItem>
+                <MenuItem value="React.js + React Native">React.js + React Native</MenuItem>
+                <MenuItem value="Responsive HTML/CSS/JavaScript website">HTML/CSS/JavaScript website</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField label="Target users" value={audience} onChange={e => setAudience(e.target.value)} fullWidth multiline minRows={2} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField label="Core features" value={features} onChange={e => setFeatures(e.target.value)} fullWidth multiline minRows={2} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField label="Frontend stack" value={frontend} onChange={e => setFrontend(e.target.value)} fullWidth multiline minRows={2} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField label="Backend / REST API stack" value={backend} onChange={e => setBackend(e.target.value)} fullWidth multiline minRows={2} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField label="Database / SQL" value={database} onChange={e => setDatabase(e.target.value)} fullWidth multiline minRows={2} />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Design direction" value={design} onChange={e => setDesign(e.target.value)} fullWidth multiline minRows={2} />
+          </Grid>
+        </Grid>
+
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mt: 2.5 }}>
+          <Button variant="contained" startIcon={<AutoAwesomeRoundedIcon />} onClick={generate}>
+            Generate AI build plan
+          </Button>
+          {generated && <Button variant="outlined" startIcon={<ContentCopyRoundedIcon />} onClick={copyPrompt}>
+            {copied ? 'Copied' : 'Copy master prompt'}
+          </Button>}
+        </Stack>
+
+        {generated && <Box className="ai-output">
+          <Typography className="ai-output-label">MASTER PROMPT</Typography>
+          <Box component="pre">{generated}</Box>
+        </Box>}
+        {copied && <Alert severity="success" icon={<CheckCircleRoundedIcon />} sx={{ mt: 2 }}>Prompt copied. Paste it into ChatGPT, Claude or Cursor to start the build.</Alert>}
+      </CardContent>
+    </Card>
+
+    <Box className="ai-flow">
+      {[
+        ['01', 'Idea', 'Define the business problem, users, roles and core features.'],
+        ['02', 'Figma', 'Design screens, components, responsive states and user flows.'],
+        ['03', 'Database', 'Design MySQL tables, relationships, indexes and SQL queries.'],
+        ['04', 'REST API', 'Plan PHP APIs and learn the equivalent Java API approach.'],
+        ['05', 'React / RN', 'Build web or mobile UI and integrate the APIs.'],
+        ['06', 'Cursor + AI', 'Implement small tasks, review changes and debug faster.'],
+        ['07', 'Ship', 'Test the complete stack, deploy and keep improving.']
+      ].map(([n, title, desc]) => <Box key={n} className="ai-flow-step">
+        <span>{n}</span><Typography variant="subtitle2">{title}</Typography><Typography color="text.secondary">{desc}</Typography>
+      </Box>)}
+    </Box>
+  </Box>
+}
+
 function Header() {
   const [open, setOpen] = useState(false);
-  const go = id => { document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' }); setOpen(false); };
+  const go = id => { const map = { 'AI Lab': 'ai lab' }; document.getElementById((map[id] || id).toLowerCase())?.scrollIntoView({ behavior: 'smooth' }); setOpen(false); };
   return <AppBar position="fixed" elevation={0} className="nav-bar"><Container maxWidth="lg"><Toolbar disableGutters sx={{ minHeight: '72px !important', justifyContent: 'space-between' }}>
     <Typography className="brand" onClick={() => go('About')}>RB<span>.</span></Typography>
     <Stack direction="row" spacing={3} className="desktop-nav">{nav.map(n => <Typography key={n} onClick={() => go(n)} className="nav-link">{n}</Typography>)}</Stack>
@@ -77,11 +351,11 @@ function App() {
           <Grid container alignItems="center" spacing={5}>
             <Grid item xs={12} md={7}>
               <MotionBox initial="hidden" animate="visible" variants={fade}>
-                <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}><span className="status-dot"/><Typography className="eyebrow">AVAILABLE FOR FRONTEND OPPORTUNITIES</Typography></Stack>
+                <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}><span className="status-dot"/><Typography className="eyebrow">AVAILABLE FOR Full-Stack Developer OPPORTUNITIES</Typography></Stack>
                 <Typography className="hero-kicker">Hello, I’m</Typography>
                 <Typography variant="h1" className="hero-name">Ravichandra<br/><span>Bodduri.</span></Typography>
-                <Typography className="hero-role">Senior Frontend Developer <span>·</span> React.js & React Native</Typography>
-                <Typography color="text.secondary" className="hero-copy">I build responsive web and mobile experiences, role-based applications, and data-rich dashboards with a focus on usability and maintainable interfaces.</Typography>
+                <Typography className="hero-role">Full-Stack Developer <span>·</span> React.js, React Native & REST APIs</Typography>
+                <Typography color="text.secondary" className="hero-copy">I build responsive web and mobile applications, REST APIs, role-based platforms, and data-rich dashboards using React.js, React Native, JavaScript, PHP, MySQL, and AI-assisted development workflows.</Typography>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mt: 3 }}>
                   <Button variant="contained" endIcon={<ArrowOutwardRoundedIcon />} onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}>Explore my work</Button>
                   <Button variant="outlined" startIcon={<MailOutlineRoundedIcon />} href="mailto:ravi1993272@gmail.com">Contact me</Button>
@@ -116,6 +390,7 @@ function App() {
           <SectionTitle eyebrow="WHAT I WORK WITH" title="Skills & toolkit" subtitle="A practical toolkit for building interfaces across web and mobile, integrating services, and presenting complex information clearly."/>
           <Grid container spacing={1.3}>{skills.map((s,i)=><Grid item key={s.name}><MotionBox whileHover={{ y: -3 }} transition={{ duration: .18 }}><Chip className="skill-chip" label={<><span className="skill-dot"/>{s.name}</>} /></MotionBox></Grid>)}</Grid>
         </Box>
+        <AiBuildLab />
         <Box component="section" id="experience" sx={{ pt: 11 }}>
           <SectionTitle eyebrow="CAREER PATH" title="Professional experience" subtitle="Roles and project contributions based on the experience details provided."/>
           <Box className="timeline">{experience.map((job,i)=><MotionBox key={job.company} className="timeline-item" initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .45, delay: i*.08 }}>
@@ -128,6 +403,12 @@ function App() {
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>{categories.map(c=><Button key={c} size="small" onClick={()=>setFilter(c)} className={`filter-btn ${filter===c?'active':''}`}>{c}</Button>)}</Stack>
           <Grid container spacing={2}>{visibleProjects.map((p,i)=><Grid item xs={12} sm={6} md={4} key={p.title}><MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .4, delay: (i%3)*.06 }} whileHover={{ y: -5 }} sx={{ height: '100%' }}>
             <Card className="project-card"><CardContent><Box className="project-icon">{p.icon}</Box><Typography className="project-type">{p.type}</Typography><Typography variant="h5" className="project-title">{p.title}</Typography><Typography color="text.secondary" className="project-desc">{p.desc}</Typography><Stack direction="row" spacing={.7} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>{p.tags.map(t=><Chip key={t} label={t} size="small" className="project-tag"/>)}</Stack></CardContent></Card>
+          </MotionBox></Grid>)}</Grid>
+        </Box>
+        <Box component="section" id="personal apps" sx={{ pt: 11 }}>
+          <SectionTitle eyebrow="PERSONAL PROJECTS" title="React Native apps I built independently" subtitle="Personal projects developed to strengthen my React Native, API integration, data management, and product development skills. GitHub links below are placeholders that can be replaced with the final repositories."/>
+          <Grid container spacing={2}>{personalApps.map((p,i)=><Grid item xs={12} md={4} key={p.title}><MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .4, delay: i*.06 }} whileHover={{ y: -5 }} sx={{ height: '100%' }}>
+            <Card className="project-card personal-app-card"><CardContent><Box className="project-icon">{p.icon}</Box><Typography className="project-type">{p.type}</Typography><Typography variant="h5" className="project-title">{p.title}</Typography><Typography color="text.secondary" className="project-desc">{p.desc}</Typography><Stack direction="row" spacing={.7} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>{p.tags.map(t=><Chip key={t} label={t} size="small" className="project-tag"/>)}</Stack><Button variant="outlined" size="small" startIcon={<GitHubIcon />} endIcon={<LaunchRoundedIcon />} href={p.url} target="_blank" rel="noreferrer" sx={{ mt: 2 }}>View GitHub</Button></CardContent></Card>
           </MotionBox></Grid>)}</Grid>
         </Box>
         <Box component="section" sx={{ pt: 11 }}>
